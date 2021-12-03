@@ -1,0 +1,6 @@
+d <- readLines('~/Desktop/Advent2021/day3.txt')
+d <- t(data.frame(lapply(strsplit(d, ''), function(a) a == "1")))
+mostCommonBits <- apply(d, 2, function(x) sum(x) > nrow(d)/2)
+pow2 <- rev(2^(0:(ncol(d)-1)))
+gamma <- sum(mostCommonBits * pow2)
+epsilon <- sum((!mostCommonBits) * pow2)
