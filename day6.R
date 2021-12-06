@@ -1,0 +1,33 @@
+fish <- c(3,4,3,1,2)
+fish <- c(2,3,1,3,4,4,1,5,2,3,1,1,4,5,5,3,5,5,4,1,2,1,1,1,1,1,1,4,1,1,1,4,1,3,1,4,1,1,4,1,3,4,5,1,1,5,3,4,3,4,1,5,1,3,1,1,1,3,5,3,2,3,1,5,2,2,1,1,4,1,1,2,2,2,2,3,2,1,2,5,4,1,1,1,5,5,3,1,3,2,2,2,5,1,5,2,4,1,1,3,3,5,2,3,1,2,1,5,1,4,3,5,2,1,5,3,4,4,5,3,1,2,4,3,4,1,3,1,1,2,5,4,3,5,3,2,1,4,1,4,4,2,3,1,1,2,1,1,3,3,3,1,1,2,2,1,1,1,5,1,5,1,4,5,1,5,2,4,3,1,1,3,2,2,1,4,3,1,1,1,3,3,3,4,5,2,3,3,1,3,1,4,1,1,1,2,5,1,4,1,2,4,5,4,1,5,1,5,5,1,5,5,2,5,5,1,4,5,1,1,3,2,5,5,5,4,3,2,5,4,1,1,2,4,4,1,1,1,3,2,1,1,2,1,2,2,3,4,5,4,1,4,5,1,1,5,5,1,4,1,4,4,1,5,3,1,4,3,5,3,1,3,1,4,2,4,5,1,4,1,2,4,1,2,5,1,1,5,1,1,3,1,1,2,3,4,2,4,3,1)
+orig_fish <- fish
+
+# Part 1
+
+for (i in 1:18) {
+    fish <- fish - 1
+    fish <- c(fish, rep(8, sum(fish == -1)))
+    fish[fish == -1] <- 6
+}
+length(fish)
+
+# Part 2
+
+fish <- orig_fish
+freq<-data.frame(matrix(nrow=9, ncol=2))
+colnames(freq) <- c('age','count')
+freq$age <- 0:8
+freq$count <- 0
+
+f<-aggregate(list(count=rep(1, length(fish))), by=list(age=fish), sum)
+f<-merge(freq,f,by='age',all=T)
+freq$count <- f$count.x + f$count.y
+freq$count[is.na(freq$count)] <- 0
+
+for (i in 1:256) {
+  new_fish <- freq$count[1]
+  freq$count <- c(freq$count[2:9], new_fish)
+  freq$count[7] <- freq$count[7] + new_fish
+}
+
+sprintf("%f", sum(freq$count))
