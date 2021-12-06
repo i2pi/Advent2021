@@ -1,4 +1,4 @@
-d <- readLines('~/Desktop/Advent2021/day5.txt')
+d <- readLines('~/Desktop/Advent2021/data/day5.txt')
 d <- sub(' -> ', ',', d)
 lines <- data.frame(t(matrix(nrow=4,as.numeric(unlist(strsplit(d, ','))))))
 colnames(lines) <- c('x1', 'y1', 'x2', 'y2')
