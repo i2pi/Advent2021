@@ -17,11 +17,9 @@ fish <- orig_fish
 
 freq <- aggregate(list(count=rep(1, length(fish)+9)), by=list(age=c(fish,0:8)), sum)
 freq$count <- freq$count - 1
-
-for (i in 1:18) {
+for (i in 1:256) {
   new_fish <- freq$count[1]
   freq$count <- c(freq$count[2:9], new_fish)
   freq$count[7] <- freq$count[7] + new_fish
 }
-
 sprintf("%.f", sum(freq$count))
