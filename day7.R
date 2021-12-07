@@ -3,7 +3,7 @@ x <- c(1101,1,29,67,1102,0,1,65,1008,65,35,66,1005,66,28,1,67,65,20,4,0,1001,65,
 
 
 # Part 1
-min(sapply(min(x):max(x), function(y) sum(abs(x-y))))
+min(sapply(min(x):max(x), \(y) sum(abs(x-y))))
 
 # Part 2
-min(sapply(min(x):max(x), function(y) { n = abs(x-y); sum(n*(n+1)/2) } ))
+min(sapply(min(x):max(x), \(y) { n = abs(x-y); sum(n*(n+1)/2) } ))
