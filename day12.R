@@ -13,8 +13,7 @@ dfs <- function(cur, a, prev, limit) {
   lvp <- length(vp)
   if (limit & lvp > 1) {
     if (lvp == length(unique(vp)))  {
-      svp <- sort(vp)
-      vp <- c(svp[c(FALSE,sapply(2:lvp, \(i) svp[i] == svp[i-1]))], 'start')
+      vp <- 'start'
     }
     if (cur %in% vp) return()
   }
