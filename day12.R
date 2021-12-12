@@ -10,18 +10,18 @@ x<-lapply(strsplit(d, '-'), \(l) a[l[1],l[2]] <<- a[l[2],l[1]] <<- 1)
 dfs <- function(cur, a, prev, limit) {
   # Create a vector (vp) of previously visited nodes that can't be revisted
   vp <- prev[toupper(prev) != prev]
-  if (limit & length(vp) > 1) {
-    if (length(vp) == length(unique(vp)))  {
+  lvp <- length(vp)
+  if (limit & lvp > 1) {
+    if (lvp == length(unique(vp)))  {
       svp <- sort(vp)
-      vp <- svp[c(FALSE,sapply(2:length(svp), \(i) svp[i] == svp[i-1]))]
+      vp <- c(svp[c(FALSE,sapply(2:lvp, \(i) svp[i] == svp[i-1]))], 'start')
     }
+    if (cur %in% vp) return()
   }
-  if (cur %in% vp) return()
   
   nexts <- names(which(a[cur,]==1))
   nexts <- nexts[!(nexts %in% vp)]
-  nexts <- nexts[nexts != 'start']
-    
+  
   for (n in nexts) if (n != 'end') {
     dfs(n, a, c(prev, cur), limit) 
   } else {
