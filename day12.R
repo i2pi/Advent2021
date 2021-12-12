@@ -12,19 +12,19 @@ dfs <- function(cur, a, prev, limit) {
   vp <- prev[toupper(prev) != prev]
   lvp <- length(vp)
   if (limit & lvp > 1) {
-    if (lvp == length(unique(vp)))  {
-      vp <- 'start'
-    }
+    # If we haven't visited a small cave more than once, then all is fair, 
+    # except returning to the start cave
+    if (lvp == length(unique(vp))) vp <- 'start'
     if (cur %in% vp) return()
   }
   
-  nexts <- names(which(a[cur,]==1))
-  nexts <- nexts[!(nexts %in% vp)]
+  nexts <- names(which(a[cur,]==1)) # Find the adjacent caves
+  nexts <- nexts[!(nexts %in% vp)]  # Drop the ones we can't revisit
   
   for (n in nexts) if (n != 'end') {
     dfs(n, a, c(prev, cur), limit) 
   } else {
-    paths[[length(paths)+1]] <<- c(prev, cur, 'end')
+    paths[[length(paths)+1]] <<- c(prev, cur, 'end')  # Found a path
   }
 }
 
