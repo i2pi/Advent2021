@@ -1,17 +1,13 @@
-d <- readLines('~/Desktop/Advent2021/data/day12.txt')
-
-nodeNames <- unique(unlist(strsplit(d, '-')))
+d <- readLines('~/Desktop/Advent2021/data/day12.demo.mini')
 
 # Create adjacency matrix
+nodeNames <- unique(unlist(strsplit(d, '-')))
 N <- length(nodeNames)
 a <- matrix(nrow=N, ncol=N, 0)
 colnames(a) <- rownames(a) <- nodeNames
 x<-lapply(strsplit(d, '-'), \(l) a[l[1],l[2]] <<- a[l[2],l[1]] <<- 1)
 
-
 dfs <- function(cur, a, prev, limit) {
-  # Depth first search
-  
   # Create a vector (vp) of previously visited nodes that can't be revisted
   vp <- prev[toupper(prev) != prev]
   if (length(vp) > 0) {
