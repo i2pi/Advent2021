@@ -11,7 +11,7 @@ dfs <- function(cur, a, prev, limit) {
   # Create a vector (vp) of previously visited nodes that can't be revisted
   vp <- prev[toupper(prev) != prev]
   if (length(vp) > 0) {
-    vpCount <- aggregate(rep(1, length(vp)), list(nodeName=vp), sum)
+    vpCount <- aggregate(rep(1, length(vp)), list(nodeName=vp), sum) # SLOW
     if (any(vpCount$x > limit)) {
       vp <- vpCount$nodeName
     } else {
