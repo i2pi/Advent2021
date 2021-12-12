@@ -1,4 +1,4 @@
-d <- readLines('~/Desktop/Advent2021/data/day12.demo.mini')
+d <- readLines('~/Desktop/Advent2021/data/day12.txt')
 
 # Create adjacency matrix
 nodeNames <- unique(unlist(strsplit(d, '-')))
@@ -11,11 +11,9 @@ dfs <- function(cur, a, prev, limit) {
   # Create a vector (vp) of previously visited nodes that can't be revisted
   vp <- prev[toupper(prev) != prev]
   if (length(vp) > 0) {
-    vpCount <- aggregate(rep(1, length(vp)), list(nodeName=vp), sum) # SLOW
-    if (any(vpCount$x > limit)) {
-      vp <- vpCount$nodeName
-    } else {
-      vp <- vpCount$nodeName[vpCount$x > limit]  
+    if (!((!limit | (length(vp) - length(unique(vp)) > 0))) & (length(vp) > 1)) {
+      svp <- sort(vp)
+      vp <- svp[c(FALSE,sapply(2:length(svp), \(i) svp[i] == svp[i-1]))]
     }
   }
   if (cur %in% vp) return()
